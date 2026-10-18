@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>CampusConnect</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bricolage+Grotesque:wght@600;800&display=swap">
+<style>
+:root{--bg:#f5f8fc;--surface:#fff;--ink:#14213d;--muted:#4a5872;--line:#d5deeb;--brand:#1d4fa3;--brand-ink:#fff;--soft:#e4edfb;--warn:#8a5a00;--warn-bg:#fff2d1;--ok:#0b6b3a;--ok-bg:#dff5e8;--bad:#a4202f;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;--bg:#0e1626;--surface:#16213a;--ink:#e8eefb;--muted:#a9b6d0;--line:#2b3b5c;--brand:#7db2ff;--brand-ink:#0e1626;--soft:#1e2d4e;--warn:#ffd37a;--warn-bg:#3a2d0c;--ok:#7be0a8;--ok-bg:#12341f;--bad:#ff8f9b}}
+:root[data-theme="dark"]{color-scheme:dark;--bg:#0e1626;--surface:#16213a;--ink:#e8eefb;--muted:#a9b6d0;--line:#2b3b5c;--brand:#7db2ff;--brand-ink:#0e1626;--soft:#1e2d4e;--warn:#ffd37a;--warn-bg:#3a2d0c;--ok:#7be0a8;--ok-bg:#12341f;--bad:#ff8f9b}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:1.0625rem/1.6 "Atkinson Hyperlegible",system-ui,sans-serif}
+h1,h2,h3{font-family:"Bricolage Grotesque","Atkinson Hyperlegible",system-ui,sans-serif;line-height:1.15;margin:0 0 .5rem}
+h1{font-size:clamp(2rem,5vw,3rem);font-weight:800}h2{font-size:1.5rem}h3{font-size:1.1rem}
+a,button,input,select{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--brand);outline-offset:2px}
+.skip{position:absolute;left:-999px;background:var(--brand);color:var(--brand-ink);padding:.5rem 1rem}.skip:focus{left:.5rem;top:.5rem;z-index:9}
+header{background:var(--surface);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:5}
+.bar{max-width:68rem;margin:auto;padding:.6rem 1rem;display:flex;gap:1rem;align-items:center;flex-wrap:wrap}
+.logo{font:800 1.3rem "Bricolage Grotesque",sans-serif;margin-right:auto}
+nav{display:flex;gap:.25rem;flex-wrap:wrap}
+nav button{background:none;border:0;border-bottom:3px solid transparent;padding:.5rem .75rem;cursor:pointer;border-radius:.4rem .4rem 0 0}
+nav button[aria-current="page"]{border-color:var(--brand);font-weight:700}
+nav button:hover{background:var(--soft)}
+main{max-width:68rem;margin:auto;padding:1.5rem 1rem 4rem}
+.btn{background:var(--brand);color:var(--brand-ink);border:2px solid var(--brand);border-radius:.5rem;padding:.5rem 1rem;font-weight:700;cursor:pointer}
+.btn.alt{background:transparent;color:var(--ink);border-color:var(--line)}.btn.alt:hover{background:var(--soft)}
+.btn.small{padding:.25rem .7rem;font-size:.95rem}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:.75rem;padding:1.1rem}
+.grid{display:grid;gap:1rem;grid-template-columns:repeat(auto-fit,minmax(17rem,1fr))}
+.lead{color:var(--muted);max-width:42rem}
+label{display:block;font-weight:700;margin:.6rem 0 .2rem}
+input,select{width:100%;padding:.55rem .7rem;border:2px solid var(--line);border-radius:.5rem;background:var(--bg)}
+.err{color:var(--bad);font-size:.95rem;min-height:1.3em;margin:.2rem 0 0}
+ul.list{list-style:none;margin:0;padding:0;display:grid;gap:.6rem}
+ul.list li{display:flex;gap:.75rem;align-items:center;justify-content:space-between;flex-wrap:wrap;border:1px solid var(--line);border-radius:.6rem;padding:.6rem .8rem;background:var(--surface)}
+.tag{display:inline-block;border-radius:2rem;padding:.05rem .7rem;font-size:.9rem;font-weight:700;background:var(--soft)}
+.tag.due{background:var(--warn-bg);color:var(--warn)}.tag.done{background:var(--ok-bg);color:var(--ok)}
+.meta{color:var(--muted);font-size:.95rem}
+.row{display:flex;gap:.5rem;flex-wrap:wrap;align-items:end}.row>*{flex:1 1 9rem}.row .btn{flex:0 0 auto}
+.progress{height:.8rem;border-radius:1rem;background:var(--soft);overflow:hidden}.progress>div{height:100%;background:var(--brand);transition:width .3s}
+#toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(1rem + env(safe-area-inset-bottom,0px));background:var(--ink);color:var(--bg);padding:.6rem 1.1rem;border-radius:.5rem;opacity:0;pointer-events:none;transition:opacity .2s;z-index:9}
+#toast.on{opacity:1}
+dialog{border:1px solid var(--line);border-radius:.75rem;background:var(--surface);color:var(--ink);max-width:24rem}
+dialog::backdrop{background:rgba(0,0,0,.5)}
+#login{max-width:26rem;margin:3rem auto}
+.hero{padding:1rem 0 1.5rem}
+[hidden]{display:none!important}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to main content</a>
+
+<section id="login" class="panel" aria-labelledby="lh">
+  <h1 id="lh" style="font-size:2rem">CampusConnect</h1>
+  <p class="lead">Plan your studies, find resources and learn with other students.</p>
+  <form id="lf" novalidate>
+    <label for="em">Email address</label>
+    <input id="em" type="email" autocomplete="email" aria-describedby="eme" value="tebalelo@campusconnect.ac.za">
+    <p class="err" id="eme" role="alert"></p>
+    <label for="pw">Password</label>
+    <input id="pw" type="password" autocomplete="current-password" aria-describedby="pwe" value="student123">
+    <p class="err" id="pwe" role="alert"></p>
+    <button class="btn" type="submit">Log in</button>
+  </form>
+  <p class="meta">Demo login is already filled in. Just select Log in.</p>
+</section>
+
+<div id="app" hidden>
+<header>
+  <div class="bar">
+    <span class="logo">CampusConnect</span>
+    <nav aria-label="Main">
+      <button data-v="dashboard">Dashboard</button>
+      <button data-v="planner">Study Planner</button>
+      <button data-v="resources">Resources</button>
+      <button data-v="groups">Study Groups</button>
+      <button data-v="notes">Notifications <span class="tag" id="nc">0</span></button>
+    </nav>
+    <button class="btn alt small" id="out">Log out</button>
+  </div>
+</header>
+<main id="main" tabindex="-1"></main>
+</div>
+
+<dialog id="dlg" aria-labelledby="dt">
+  <h2 id="dt">Delete this task?</h2>
+  <p id="dm" class="meta"></p>
+  <div class="row" style="justify-content:flex-end">
+    <button class="btn alt" id="no">Keep task</button>
+    <button class="btn" id="yes">Delete task</button>
+  </div>
+</dialog>
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script>
+const $=(s,r=document)=>r.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const day=n=>{const d=new Date();d.setDate(d.getDate()+n);return d.toISOString().slice(0,10)};
+const S={
+ view:"dashboard",
+ tasks:[{id:1,title:"HCIN6222 Formative 1",type:"Assignment",due:day(3),done:false},
+        {id:2,title:"Databases test revision",type:"Test",due:day(6),done:false},
+        {id:3,title:"Read Chapter 4: Interaction types",type:"Study goal",due:day(-1),done:true}],
+ res:[{t:"HCI exam revision guide",m:"HCIN6222",k:"Study guide",src:"Official",a:"Course team"},
+      {t:"Nielsen’s 10 heuristics summary",m:"HCIN6222",k:"Article",src:"Official",a:"Nielsen Norman Group"},
+      {t:"SQL joins cheat sheet",m:"DBAS6211",k:"Revision notes",src:"Student",a:"Student contributor"},
+      {t:"Java OOP past paper tips",m:"PROG6212",k:"Revision notes",src:"Student",a:"Student contributor"},
+      {t:"Academic writing and referencing",m:"All modules",k:"Study guide",src:"Official",a:"Library services"}],
+ groups:[{id:1,n:"HCI Exam Prep",m:"HCIN6222",w:"Weekday evenings",joined:false},
+         {id:2,n:"Database Study Circle",m:"DBAS6211",w:"Saturday mornings",joined:true},
+         {id:3,n:"Code and Coffee",m:"PROG6212",w:"Lunch breaks",joined:false}],
+ notes:[{id:1,t:"Your HCIN6222 assignment is due in 3 days. Review your study plan when you’re ready.",r:false},
+        {id:2,t:"Database Study Circle has a new discussion post.",r:false},
+        {id:3,t:"Career workshop: CV writing, Thursday 14:00.",r:true}],
+ saved:{},pending:null
+};
+const toast=m=>{const t=$("#toast");t.textContent=m;t.classList.add("on");clearTimeout(toast.h);toast.h=setTimeout(()=>t.classList.remove("on"),2600)};
+const today=day(0);
+const status=t=>t.done?'<span class="tag done">✓ Done</span>':t.due<today?'<span class="tag due">⚠ Overdue</span>':'<span class="tag">Upcoming</span>';
+const fmt=d=>new Date(d+"T00:00").toLocaleDateString("en-ZA",{day:"numeric",month:"short"});
+
+$("#lf").addEventListener("submit",e=>{
+ e.preventDefault();
+ const em=$("#em").value.trim(),pw=$("#pw").value;
+ const ok1=/^\S+@\S+\.\S+$/.test(em),ok2=pw.length>=6;
+ $("#eme").textContent=ok1?"":"Enter an email address like name@example.com.";
+ $("#pwe").textContent=ok2?"":"Enter a password with at least 6 characters.";
+ if(ok1&&ok2){$("#login").hidden=true;$("#app").hidden=false;go("dashboard");toast("Welcome back!")}
+ else (ok1?$("#pw"):$("#em")).focus();
+});
+$("#out").onclick=()=>{$("#app").hidden=true;$("#login").hidden=false;$("#lf").reset();$("#eme").textContent="";$("#pwe").textContent=""};
+document.querySelectorAll("nav button").forEach(b=>b.onclick=()=>go(b.dataset.v));
+
+function go(v){
+ S.view=v;
+ document.querySelectorAll("nav button").forEach(b=>b.toggleAttribute("aria-current",b.dataset.v===v)||0);
+ document.querySelectorAll("nav button").forEach(b=>{if(b.dataset.v===v)b.setAttribute("aria-current","page");else b.removeAttribute("aria-current")});
+ render();
+ $("#main").focus({preventScroll:true});scrollTo(0,0);
+}
+function render(){
+ $("#nc").textContent=S.notes.filter(n=>!n.r).length;
+ const m=$("#main");
+ ({dashboard,planner,resources,groups,notes})[S.view](m);
+}
+function taskItem(t,actions){
+ return `<li><div><strong>${esc(t.title)}</strong><br><span class="meta">${esc(t.type)} · due ${fmt(t.due)}</span></div><div class="row" style="flex:0 0 auto;align-items:center">${status(t)}${actions?`<button class="btn alt small" data-tg="${t.id}">${t.done?"Mark not done":"Mark done"}</button><button class="btn alt small" data-del="${t.id}" aria-label="Delete ${esc(t.title)}">Delete</button>`:""}</div></li>`;
+}
+function dashboard(m){
+ const open=S.tasks.filter(t=>!t.done).sort((a,b)=>a.due.localeCompare(b.due));
+ const pct=Math.round(S.tasks.filter(t=>t.done).length/S.tasks.length*100)||0;
+ m.innerHTML=`<div class="hero"><h1>Hi Tebalelo, here’s your week.</h1><p class="lead">Your deadlines, notifications and study groups in one place.</p></div>
+ <div class="grid">
+  <section class="panel" aria-labelledby="d1"><h2 id="d1">Upcoming deadlines</h2>
+   ${open.length?`<ul class="list">${open.slice(0,3).map(t=>taskItem(t,false)).join("")}</ul>`:'<p>No open tasks. Add one in the Study Planner.</p>'}
+   <p><button class="btn" data-go="planner">Add a task</button></p></section>
+  <section class="panel" aria-labelledby="d2"><h2 id="d2">Your progress</h2>
+   <p>${pct}% of your tasks are done.</p>
+   <div class="progress" role="progressbar" aria-valuenow="${pct}" aria-valuemin="0" aria-valuemax="100" aria-label="Task progress"><div style="width:${pct}%"></div></div>
+   <p class="meta">Everyone moves at their own pace. Small steps count.</p></section>
+  <section class="panel" aria-labelledby="d3"><h2 id="d3">Unread notifications</h2>
+   <p>${S.notes.filter(n=>!n.r).length} unread.</p><button class="btn alt" data-go="notes">View notifications</button></section>
+  <section class="panel" aria-labelledby="d4"><h2 id="d4">Recommended resources</h2>
+   <ul class="list">${S.res.slice(0,2).map(r=>`<li><span>${esc(r.t)}</span><span class="tag">${esc(r.m)}</span></li>`).join("")}</ul>
+   <p><button class="btn alt" data-go="resources">Browse resources</button></p></section>
+ </div>`;
+ m.querySelectorAll("[data-go]").forEach(b=>b.onclick=()=>go(b.dataset.go));
+}
+function planner(m){
+ const ts=[...S.tasks].sort((a,b)=>a.due.localeCompare(b.due));
+ m.innerHTML=`<h1>Study Planner</h1><p class="lead">Add assignments, tests, exams and personal study goals.</p>
+ <form class="panel" id="tf" novalidate><div class="row">
+  <div><label for="tt">Task name</label><input id="tt" aria-describedby="tte"></div>
+  <div><label for="ty">Type</label><select id="ty"><option>Assignment</option><option>Test</option><option>Exam</option><option>Study goal</option></select></div>
+  <div><label for="td">Due date</label><input id="td" type="date" aria-describedby="tte"></div>
+  <button class="btn" type="submit">Add task</button></div>
+  <p class="err" id="tte" role="alert"></p></form>
+ <h2 style="margin-top:1.5rem">Your tasks</h2>
+ ${ts.length?`<ul class="list">${ts.map(t=>taskItem(t,true)).join("")}</ul>`:'<p>Nothing planned yet. Add your first task above.</p>'}`;
+ $("#tf").onsubmit=e=>{e.preventDefault();
+  const t=$("#tt").value.trim(),d=$("#td").value;
+  if(!t||!d){$("#tte").textContent=!t?"Enter a task name so you can recognise it later.":"Choose a due date for this task.";return}
+  S.tasks.push({id:Date.now(),title:t,type:$("#ty").value,due:d,done:false});
+  render();toast("Task added")};
+ m.querySelectorAll("[data-tg]").forEach(b=>b.onclick=()=>{const t=S.tasks.find(x=>x.id==b.dataset.tg);t.done=!t.done;render();toast(t.done?"Task marked done":"Task marked not done")});
+ m.querySelectorAll("[data-del]").forEach(b=>b.onclick=()=>{const t=S.tasks.find(x=>x.id==b.dataset.del);S.pending=t.id;$("#dm").textContent="“"+t.title+"” will be removed from your planner.";$("#dlg").showModal()});
+}
+$("#no").onclick=()=>$("#dlg").close();
+$("#yes").onclick=()=>{S.tasks=S.tasks.filter(t=>t.id!==S.pending);$("#dlg").close();render();toast("Task deleted")};
+function resources(m){
+ m.innerHTML=`<h1>Resources</h1><p class="lead">Official materials are labelled so you can tell them apart from student-created notes.</p>
+ <div class="panel"><div class="row"><div><label for="q">Search resources</label><input id="q" type="search" placeholder="Try “SQL” or “HCIN6222”"></div>
+ <div><label for="f">Resource type</label><select id="f"><option value="">All types</option><option>Study guide</option><option>Article</option><option>Revision notes</option></select></div></div></div>
+ <ul class="list" id="rl" style="margin-top:1rem" aria-live="polite"></ul>`;
+ const draw=()=>{const q=$("#q").value.toLowerCase(),f=$("#f").value;
+  const r=S.res.filter(x=>(!f||x.k===f)&&(x.t+x.m+x.k).toLowerCase().includes(q));
+  $("#rl").innerHTML=r.length?r.map((x,i)=>`<li><div><strong>${esc(x.t)}</strong><br><span class="meta">${esc(x.m)} · ${esc(x.k)} · ${esc(x.src)} · by ${esc(x.a)}</span></div><button class="btn alt small" data-sv="${esc(x.t)}" aria-pressed="${!!S.saved[x.t]}">${S.saved[x.t]?"★ Saved":"☆ Save"}</button></li>`).join(""):'<li>No matches. Try a different keyword or clear the type filter.</li>';
+  $("#rl").querySelectorAll("[data-sv]").forEach(b=>b.onclick=()=>{const k=b.dataset.sv;S.saved[k]=!S.saved[k];draw();toast(S.saved[k]?"Resource saved":"Resource removed from saved")})};
+ $("#q").oninput=draw;$("#f").onchange=draw;draw();
+}
+function groups(m){
+ m.innerHTML=`<h1>Study Groups</h1><p class="lead">Join a group for your module. Studying alone is fine too; groups are optional.</p>
+ <div class="grid">${S.groups.map(g=>`<section class="panel"><h3>${esc(g.n)}</h3><p class="meta">${esc(g.m)} · ${esc(g.w)}</p>
+ ${g.joined?'<span class="tag done">✓ Member</span> ':''}<button class="btn ${g.joined?"alt":""}" data-j="${g.id}">${g.joined?"Leave group":"Join group"}</button></section>`).join("")}</div>
+ <section class="panel" style="margin-top:1.5rem"><h2>Community guidelines</h2><p>Be respectful. Share sources for what you post. Don’t share exam answers or submit someone else’s work as your own. Use the report button on any post that breaks these rules.</p></section>`;
+ m.querySelectorAll("[data-j]").forEach(b=>b.onclick=()=>{const g=S.groups.find(x=>x.id==b.dataset.j);g.joined=!g.joined;render();toast(g.joined?"You joined "+g.n:"You left "+g.n)});
+}
+function notes(m){
+ m.innerHTML=`<h1>Notifications</h1><p class="lead">Updates about deadlines, groups and answers.</p>
+ <ul class="list">${S.notes.map(n=>`<li><span>${n.r?"":'<span class="tag due">New</span> '}${esc(n.t)}</span>${n.r?"":`<button class="btn alt small" data-r="${n.id}">Mark as read</button>`}</li>`).join("")}</ul>`;
+ m.querySelectorAll("[data-r]").forEach(b=>b.onclick=()=>{S.notes.find(x=>x.id==b.dataset.r).r=true;render()});
+}
+</script>
+</body>
+</html>
